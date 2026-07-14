@@ -1,0 +1,10 @@
+{
+  "realm": "utdallas-cs",
+  "auth-server-url": "https://auth.savvytechies.com",
+  "ssl-required": "external",
+  "resource": "nodejs-client",
+  "credentials": {
+    "secret": "okll8i5Q0LMUyQIBbyRd8HIG8xcTb0MN"
+  },
+  "confidential-port": 0
+}

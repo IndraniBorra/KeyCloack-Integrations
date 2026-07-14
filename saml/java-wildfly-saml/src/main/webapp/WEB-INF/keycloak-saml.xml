@@ -1,0 +1,53 @@
+<keycloak-saml-adapter xmlns="urn:keycloak:saml:adapter"
+                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xsi:schemaLocation="urn:keycloak:saml:adapter https://www.keycloak.org/schema/keycloak_saml_adapter_1_10.xsd">
+
+  <SP entityID="http://localhost:8084/demo-saml/"
+      sslPolicy="EXTERNAL"
+      nameIDPolicyFormat="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified"
+      logoutPage="/logout.html">
+
+    <Keys>
+      <!-- SP signing key — generated locally -->
+      <!-- Replace with your actual SP keystore in production -->
+      <Key signing="true">
+        <KeyStore resource="/WEB-INF/keystore.jks"
+                  password="password"
+                  keyAlias="demo-saml"
+                  keyPassword="password"/>
+      </Key>
+    </Keys>
+
+    <PrincipalNameMapping policy="FROM_NAME_ID"/>
+
+    <RoleIdentifiers>
+      <Attribute name="Role"/>
+    </RoleIdentifiers>
+
+    <IDP entityID="https://auth.savvytechies.com/realms/utdallas-cs">
+      <SingleSignOnService signRequest="true"
+                           validateResponseSignature="true"
+                           requestBinding="POST"
+                           bindingUrl="https://auth.savvytechies.com/realms/utdallas-cs/protocol/saml"/>
+      <SingleLogoutService
+          validateRequestSignature="false"
+          validateResponseSignature="false"
+          signRequest="false"
+          signResponse="false"
+          requestBinding="POST"
+          responseBinding="POST"
+          postBindingUrl="https://auth.savvytechies.com/realms/utdallas-cs/protocol/saml"
+          redirectBindingUrl="https://auth.savvytechies.com/realms/utdallas-cs/protocol/saml"/>
+
+      <!-- Replace with IdP certificate from Keycloak Admin > Realm Settings > Keys -->
+      <Keys>
+        <Key signing="true">
+          <CertificatePem>
+REPLACE_WITH_IDP_CERTIFICATE_FROM_KEYCLOAK_ADMIN
+          </CertificatePem>
+        </Key>
+      </Keys>
+    </IDP>
+
+  </SP>
+</keycloak-saml-adapter>

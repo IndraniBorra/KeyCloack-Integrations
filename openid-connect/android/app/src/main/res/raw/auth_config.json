@@ -1,0 +1,8 @@
+{
+  "client_id": "android-client",
+  "redirect_uri": "com.example.keycloakdemo:/oauth2redirect",
+  "end_session_redirect_uri": "com.example.keycloakdemo:/oauth2redirect",
+  "authorization_scope": "openid profile email",
+  "discovery_uri": "https://auth.savvytechies.com/realms/utdallas-cs/.well-known/openid-configuration",
+  "https_required": true
+}

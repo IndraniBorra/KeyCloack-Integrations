@@ -1,0 +1,10 @@
+{
+  "client-id": "wildfly-elytron-client",
+  "provider-url": "https://auth.savvytechies.com/realms/utdallas-cs",
+  "public-client": false,
+  "credentials": {
+    "secret": "hyec1kKFRHMZHWsMUozyomCuZBrr2P4W"
+  },
+  "ssl-required": "external",
+  "confidential-port": 0
+}

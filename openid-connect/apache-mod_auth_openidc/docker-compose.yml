@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  apache-oidc:
+    build: .
+    ports:
+      - "8083:8083"
+    environment:
+      # Override client secret via env if preferred
+      - OIDC_CLIENT_SECRET=${OIDC_CLIENT_SECRET:-REPLACE_WITH_YOUR_CLIENT_SECRET}
+    restart: unless-stopped

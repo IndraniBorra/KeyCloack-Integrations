@@ -1,0 +1,16 @@
+<!--
+  Download the actual Keycloak IdP SAML metadata and replace this file.
+
+  URL to download:
+  https://auth.savvytechies.com/realms/utdallas-cs/protocol/saml/descriptor
+
+  Command:
+    curl -o idp-metadata.xml \
+      https://auth.savvytechies.com/realms/utdallas-cs/protocol/saml/descriptor
+
+  Then rebuild the Docker image.
+-->
+<EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata"
+                  entityID="https://auth.savvytechies.com/realms/utdallas-cs">
+  <!-- REPLACE THIS FILE with actual Keycloak metadata from the URL above -->
+</EntityDescriptor>
