@@ -24,7 +24,8 @@ public class SamlProtectedServlet extends HttpServlet {
         boolean isAdmin = req.isUserInRole("admin");
         PrintWriter out = resp.getWriter();
 
-        out.println("""
+        StringBuilder sb = new StringBuilder();
+        sb.append("""
             <!DOCTYPE html>
             <html>
             <head>
@@ -42,22 +43,34 @@ public class SamlProtectedServlet extends HttpServlet {
                 <h2>Protected Profile (SAML)</h2>
                 <div class="alert alert-success">Authenticated via Keycloak SAML</div>
                 <table class="table table-bordered">
-                  <tr><th>NameID (Username)</th><td>""" + principal.getName() + """
+                  <tr><th>NameID (Username)</th><td>")""");
+        sb.append(principal.getName());
+        sb.append("""
                   </td></tr>
-                  <tr><th>Is Admin</th><td>""" + isAdmin + """
+                  <tr><th>Is Admin</th><td>")""");
+        sb.append(isAdmin);
+        sb.append("""
                   </td></tr>
                 </table>
                 <h5 class="mt-4">SAML Session Info</h5>
                 <p class="text-muted small">Note: SAML uses assertions, not bearer tokens like OIDC. The raw SAML assertion is processed server-side by the Keycloak SAML adapter and is not directly available as a JWT. The session principal and roles above are extracted from the SAML assertion.</p>
                 <h6>Principal Class</h6>
-                <pre style="word-wrap:break-word;white-space:pre-wrap;background:#f1f3f5;padding:1rem;border-radius:8px;font-size:.85rem;">""" + principal.getClass().getName() + """</pre>
+                <pre style="word-wrap:break-word;white-space:pre-wrap;background:#f1f3f5;padding:1rem;border-radius:8px;font-size:.85rem;">""");
+        sb.append(principal.getClass().getName());
+        sb.append("""
+                </pre>
                 <h6>Session ID</h6>
-                <pre style="word-wrap:break-word;white-space:pre-wrap;background:#f1f3f5;padding:1rem;border-radius:8px;font-size:.85rem;">""" + req.getSession().getId() + """</pre>
+                <pre style="word-wrap:break-word;white-space:pre-wrap;background:#f1f3f5;padding:1rem;border-radius:8px;font-size:.85rem;">""");
+        sb.append(req.getSession().getId());
+        sb.append("""
+                </pre>
                 <a href="../../" class="btn btn-secondary me-2">Home</a>
                 <a href="../../j_saml_logout" class="btn btn-outline-danger">SAML Logout</a>
               </div>
             </body>
             </html>
             """);
+
+        out.println(sb.toString());
     }
 }

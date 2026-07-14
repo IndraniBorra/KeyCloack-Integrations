@@ -49,12 +49,12 @@
 
 ---
 
-### 3. `nodejs-client` — Node.js (keycloak-connect)
+### 3. `nodejs-client-2` — Node.js (keycloak-connect)
 
 | Setting | Value |
 |---|---|
 | Client type | OpenID Connect |
-| Client ID | `nodejs-client` |
+| Client ID | `nodejs-client-2` |
 | Client authentication | ON (confidential) |
 | Standard flow | ON |
 | Valid redirect URIs | `http://localhost:4000/*` |
