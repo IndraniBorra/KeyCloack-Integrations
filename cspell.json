@@ -11,9 +11,12 @@
     "Galleon",
     "gitignoring",
     "googleusercontent",
+    "gprathi",
     "gradlew",
     "httpd",
     "mvnw",
+    "uniquified",
+    "xcodeproj",
     "Intergations",
     "keycloak",
     "keystore",
@@ -28,6 +31,9 @@
     "utdallas",
     "wildfly",
     "xcodegen"
+  ],
+  "ignoreRegExpList": [
+    "[0-9]+-[a-z0-9]+\\.apps\\.googleusercontent\\.com"
   ],
   "ignorePaths": [
     "node_modules/**",
