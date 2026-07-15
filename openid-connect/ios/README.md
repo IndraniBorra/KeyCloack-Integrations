@@ -1,6 +1,28 @@
-# iOS — AppAuth SDK (OIDC)
+# iOS — AppAuth SDK (OIDC)  ✅ WORKING
 
-Native iOS app (Swift/SwiftUI) using `AppAuth-iOS` for Keycloak OIDC login.
+Native iOS app (Swift/SwiftUI) using `AppAuth-iOS` for Keycloak OIDC login (Authorization Code + PKCE).
+Verified building, launching on the iOS 26.5 simulator, and authenticating against realm `utdallas-cs`.
+
+## Build & run from the command line (no manual Xcode steps)
+`Package.swift` alone can't produce an iOS app, so the project is generated with **XcodeGen** from
+`project.yml` (defines the app target, bundle id `com.example.keycloakdemo`, the AppAuth SPM
+dependency, and the `com.example.keycloakdemo` URL scheme in Info.plist).
+
+```bash
+brew install xcodegen                       # one time
+cd openid-connect/ios
+xcodegen generate                           # -> KeycloakDemo.xcodeproj (+ resolves AppAuth-iOS)
+# if no iOS simulator runtime is installed:  xcodebuild -downloadPlatform iOS
+xcodebuild -project KeycloakDemo.xcodeproj -scheme KeycloakDemo \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
+  -derivedDataPath build/DerivedData build
+xcrun simctl boot "iPhone 17 Pro"; open -a Simulator
+xcrun simctl install booted build/DerivedData/Build/Products/Debug-iphonesimulator/KeycloakDemo.app
+xcrun simctl launch booted com.example.keycloakdemo
+```
+Then tap **Login with Keycloak** and sign in as `testuser` / `Test@1234`.
+
+
 
 ## Keycloak Client Setup
 

@@ -1,6 +1,47 @@
-# Android — AppAuth SDK (OIDC)
+# Android — AppAuth SDK (OIDC)  ✅ WORKING
 
-Native Android app (Kotlin) using the `AppAuth-Android` library for Keycloak OIDC login.
+Native Android app (Kotlin) using the `AppAuth-Android` library for Keycloak OIDC login
+(Authorization Code + PKCE). Verified building, installing, launching on an Android 34 emulator,
+and reaching the Keycloak login against realm `utdallas-cs`.
+
+## Build & run from the command line (no Android Studio needed)
+Requires the Android SDK. If you don't have it:
+```bash
+brew install --cask android-commandlinetools
+export ANDROID_HOME=$HOME/Library/Android/sdk
+yes | sdkmanager --sdk_root="$ANDROID_HOME" --licenses
+sdkmanager --sdk_root="$ANDROID_HOME" "cmdline-tools;latest" "platform-tools" \
+  "platforms;android-34" "build-tools;34.0.0" "emulator" \
+  "system-images;android-34;google_apis;arm64-v8a"
+```
+This project ships `local.properties` (SDK path), `gradle.properties` (AndroidX on, Gradle daemon
+pinned to JDK 21 — the system JDK 23 is too new for AGP 8.2.0), and a Gradle 8.7 wrapper.
+
+```bash
+cd openid-connect/android
+./gradlew :app:assembleDebug                      # -> app/build/outputs/apk/debug/app-debug.apk
+
+# create + boot an emulator
+"$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd -n kc_pixel \
+  -k "system-images;android-34;google_apis;arm64-v8a" -d pixel_6 --force
+"$ANDROID_HOME/emulator/emulator" -avd kc_pixel -no-snapshot &
+adb wait-for-device
+
+# install + launch
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+adb shell am start -n com.example.keycloakdemo/.MainActivity
+```
+Tap **Login with Keycloak** → Chrome Custom Tab opens Keycloak → sign in as `testuser`/`Test@1234`
+→ redirects back to the app via `com.example.keycloakdemo:/oauth2redirect` → profile + tokens show.
+
+### Build notes (fixes applied)
+- `app/build.gradle` sets `manifestPlaceholders = [appAuthRedirectScheme: 'com.example.keycloakdemo']`
+  — **required** by AppAuth-Android (its `RedirectUriReceiverActivity` reads this scheme). Without it
+  the manifest merger fails.
+- The manual `RedirectUriReceiverActivity` was removed from `AndroidManifest.xml` (the library
+  contributes it) along with the deprecated `package=` attribute (namespace lives in build.gradle).
+
+
 
 ## Keycloak Client Setup
 

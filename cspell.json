@@ -1,0 +1,38 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "adminuser",
+    "AppAuth",
+    "Authlib",
+    "Cloack",
+    "cors",
+    "Elytron",
+    "Galleon",
+    "gitignoring",
+    "googleusercontent",
+    "gradlew",
+    "httpd",
+    "mvnw",
+    "Intergations",
+    "keycloak",
+    "keystore",
+    "keytool",
+    "mellon",
+    "oidc",
+    "openidc",
+    "owin",
+    "PKCE",
+    "savvytechies",
+    "testuser",
+    "utdallas",
+    "wildfly",
+    "xcodegen"
+  ],
+  "ignorePaths": [
+    "node_modules/**",
+    "dist/**",
+    "build/**",
+    "package-lock.json"
+  ]
+}

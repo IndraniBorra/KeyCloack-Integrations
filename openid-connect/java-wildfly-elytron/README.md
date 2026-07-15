@@ -1,6 +1,31 @@
-# Java WildFly — Elytron OIDC Subsystem
+# Java WildFly — Elytron OIDC Subsystem  ✅ WORKING
 
-Jakarta EE servlet secured using WildFly's built-in Elytron OIDC subsystem (no extra Keycloak adapter needed).
+Jakarta EE servlet secured using WildFly's built-in Elytron OIDC subsystem (no extra Keycloak
+adapter needed). Verified end-to-end on WildFly 40 against realm `utdallas-cs` as `testuser`:
+redirect to Keycloak → login → back to `/protected/profile` showing the username + access/ID tokens.
+
+## Run (WildFly 40, JDK 21)
+1. Put the real client secret in `src/main/webapp/WEB-INF/oidc.json` (`credentials.secret`).
+   `oidc.json` also sets `"principal-attribute": "preferred_username"` so the page shows the
+   username instead of the `sub` UUID.
+2. Build and deploy:
+```bash
+export JAVA_HOME=/opt/homebrew/Cellar/openjdk@21/21.0.9/libexec/openjdk.jdk/Contents/Home
+mvn clean package
+cp target/demo-oidc.war $WILDFLY_HOME/standalone/deployments/
+$WILDFLY_HOME/bin/standalone.sh -Djboss.socket.binding.port-offset=2   # -> http://localhost:8082
+```
+Open http://localhost:8082/demo-oidc/protected/profile and log in as `testuser` / `Test@1234`.
+
+> **Running it alongside the WildFly SAML app?** They use different ports (8082 vs 8084), so run a
+> second WildFly instance from the same install with its own base dir:
+> `cp -r $WILDFLY_HOME/standalone $WILDFLY_HOME/standalone-oidc` then start with
+> `-Djboss.server.base.dir=$WILDFLY_HOME/standalone-oidc -Djboss.socket.binding.port-offset=2`.
+
+## Note: role gate
+`/protected/*` is set to `**` (any authenticated user), matching the other OIDC demo apps. To
+demo role-based access instead, add realm roles and list them in `web.xml`'s `<auth-constraint>`.
+
 
 ## Keycloak Client Setup
 

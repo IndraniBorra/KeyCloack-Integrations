@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.keycloakdemo">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -18,19 +17,8 @@
             </intent-filter>
         </activity>
 
-        <!-- AppAuth redirect URI handler -->
-        <activity
-            android:name="net.openid.appauth.RedirectUriReceiverActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data
-                    android:scheme="com.example.keycloakdemo"
-                    android:host="oauth2redirect" />
-            </intent-filter>
-        </activity>
+        <!-- AppAuth's RedirectUriReceiverActivity is contributed by the library manifest;
+             its scheme comes from the appAuthRedirectScheme manifestPlaceholder in build.gradle. -->
 
     </application>
 </manifest>

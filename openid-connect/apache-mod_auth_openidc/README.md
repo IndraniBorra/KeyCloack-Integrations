@@ -1,6 +1,31 @@
-# Apache HTTP Server — mod_auth_openidc (OIDC)
+# Apache HTTP Server — mod_auth_openidc (OIDC)  ✅ WORKING
 
 Apache httpd with `mod_auth_openidc` acting as an OIDC Relying Party (RP) in front of Keycloak.
+Verified end-to-end: `/secure/` redirects to Keycloak, login as `testuser` returns to the
+protected page (mod_auth_openidc sets `REMOTE_USER` + `OIDC_CLAIM_*` headers).
+
+## Docker daemon
+If Docker Desktop's engine won't start (it was broken on the build machine — 500 on `_ping`),
+use **Colima** as the daemon instead:
+```bash
+brew install colima docker-compose
+colima start --cpu 2 --memory 2
+docker context use colima
+```
+
+## Run
+1. Put the client secret in `oidc.conf` (`OIDCClientSecret`) and a random 32-char
+   `OIDCCryptoPassphrase`.
+2. `docker compose up --build -d`  (serves on http://localhost:8083)
+3. Public: http://localhost:8083/public/  ·  Protected: http://localhost:8083/secure/
+
+## Fixes applied (were missing / needed)
+- **`Listen 8083`** added to `oidc.conf` — Debian's `ports.conf` only has `Listen 80`, so the
+  `<VirtualHost *:8083>` never bound without it (connection refused on 8083).
+- **`ca-certificates`** added to the `Dockerfile` — `debian:bookworm-slim` ships without it, so
+  mod_auth_openidc's HTTPS call to Keycloak's discovery URL failed (`error setting certificate
+  file`), returning 500 on `/secure/`.
+
 
 ## Keycloak Client Setup
 

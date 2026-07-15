@@ -1,0 +1,38 @@
+name: KeycloakDemo
+options:
+  bundleIdPrefix: com.example
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+packages:
+  AppAuth:
+    url: https://github.com/openid/AppAuth-iOS.git
+    from: "1.7.5"
+targets:
+  KeycloakDemo:
+    type: application
+    platform: iOS
+    sources:
+      - path: KeycloakDemo
+    dependencies:
+      - package: AppAuth
+        product: AppAuth
+    info:
+      path: KeycloakDemo/Info.plist
+      properties:
+        CFBundleDisplayName: Keycloak Demo
+        UILaunchScreen: {}
+        UIApplicationSupportsIndirectInputEvents: true
+        CFBundleURLTypes:
+          - CFBundleURLName: com.example.keycloakdemo
+            CFBundleURLSchemes:
+              - com.example.keycloakdemo
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.keycloakdemo
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        TARGETED_DEVICE_FAMILY: "1"
+        SWIFT_VERSION: "5.9"
+        GENERATE_INFOPLIST_FILE: NO
+        CODE_SIGNING_ALLOWED: NO

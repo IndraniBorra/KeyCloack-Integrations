@@ -1,8 +1,6 @@
 package com.example;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.HttpConstraint;
-import jakarta.servlet.annotation.ServletSecurity;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,7 +13,6 @@ import java.io.PrintWriter;
 import java.security.Principal;
 
 @WebServlet("/protected/profile")
-@ServletSecurity(@HttpConstraint(rolesAllowed = {"user", "admin"}))
 public class ProtectedServlet extends HttpServlet {
 
     @Override

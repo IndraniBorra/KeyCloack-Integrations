@@ -2,19 +2,20 @@
                       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                       xsi:schemaLocation="urn:keycloak:saml:adapter https://www.keycloak.org/schema/keycloak_saml_adapter_1_10.xsd">
 
-  <SP entityID="http://localhost:8084/demo-saml/"
+  <SP entityID="http://localhost:8084/demo-saml/sp"
       sslPolicy="EXTERNAL"
       nameIDPolicyFormat="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified"
-      logoutPage="/logout.html">
+      logoutPage="/logout.html"
+      keepDOMAssertion="true">
 
     <Keys>
       <!-- SP signing key — generated locally -->
       <!-- Replace with your actual SP keystore in production -->
       <Key signing="true">
-        <KeyStore resource="/WEB-INF/keystore.jks"
-                  password="password"
-                  keyAlias="demo-saml"
-                  keyPassword="password"/>
+        <KeyStore resource="/WEB-INF/keystore.jks" password="password">
+          <PrivateKey alias="demo-saml" password="password"/>
+          <Certificate alias="demo-saml"/>
+        </KeyStore>
       </Key>
     </Keys>
 
@@ -25,7 +26,7 @@
     </RoleIdentifiers>
 
     <IDP entityID="https://auth.savvytechies.com/realms/utdallas-cs">
-      <SingleSignOnService signRequest="true"
+      <SingleSignOnService signRequest="false"
                            validateResponseSignature="true"
                            requestBinding="POST"
                            bindingUrl="https://auth.savvytechies.com/realms/utdallas-cs/protocol/saml"/>
@@ -43,7 +44,23 @@
       <Keys>
         <Key signing="true">
           <CertificatePem>
-REPLACE_WITH_IDP_CERTIFICATE_FROM_KEYCLOAK_ADMIN
+-----BEGIN CERTIFICATE-----
+MIICpTCCAY0CBgGfXb29YDANBgkqhkiG9w0BAQsFADAWMRQwEgYDVQQDDAt1dGRh
+bGxhcy1jczAeFw0yNjA3MTMyMzA3MjNaFw0zNjA3MTMyMzA5MDNaMBYxFDASBgNV
+BAMMC3V0ZGFsbGFzLWNzMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA
+qGRPvtHs/ariKqiSiOSaKQ4bgijR9Mu7g5+S1kGr2xk7SKaQ5ZRRl0CU6WjO7Qmo
+J8Amh7Rw6S8aZM5zY1mLJGNm7mMXAQTBLHCIof91buzyl/4PHhTKsvjqnElVZr66
+77QdoanIzGCwhIdKRegIovgDRtnUiSgSdatQtUFtkAjf3m417sqt+ycFj0MePsRC
+qyZ81/oO2EviYPs9HZ6JYwkIE90iiPjwhbscI+q9pvXMmUvLmdRhv6IBvg0lXZH3
+dbi89RtLUM7TerHyZSch/16Ehu+qV9HGs/QDbq0koXAHB+41sjA2qVynBpq4/qRT
+WFTjXQg3lpp6A1Ewz5DNYwIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQBuHTfMiQ3V
+yRjGVNl7REy4gKaJl5IBs3n99jbF6ESPAeqx0GXcBE/eGoNSGviogAeExmNmDEkm
+lzY6mSXRur5CkJ/7pycNBcLOHgW0TRlD/hGLgOH/7MIWcapFbV4jLCUCNtba4xh0
+iwAuDrqWPiVswsJM2fD5LbXUaqlJPbnZ/uwUHoRYiazNHSed6uzwkseQ6OvAV/Ah
+gRLdYMa78NqKH639/JxwTnTBvS2lCoW+I8HYjQ8gC3uySaC4KdSHmf3MktlTG5rg
+1YgBl8wle55UK3cOVJxo8hg4G7YwWzC07375xYpN79aTHrAa6VZDJTzFBj1fNgR0
+HAtm4rYqxl3O
+-----END CERTIFICATE-----
           </CertificatePem>
         </Key>
       </Keys>

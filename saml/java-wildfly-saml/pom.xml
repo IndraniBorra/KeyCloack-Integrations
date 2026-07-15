@@ -14,7 +14,7 @@
   <properties>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
-    <keycloak.version>24.0.3</keycloak.version>
+    <keycloak.version>26.7.0</keycloak.version>
     <failOnMissingWebXml>false</failOnMissingWebXml>
   </properties>
 
@@ -27,10 +27,23 @@
       <scope>provided</scope>
     </dependency>
 
-    <!-- Keycloak SAML adapter — provided by Galleon feature pack on WildFly -->
+    <!-- Keycloak SAML adapter (SamlPrincipal/SamlSession) — provided by the Galleon layer on WildFly.
+         All three are already on the server; declared 'provided' only so the servlet compiles. -->
     <dependency>
       <groupId>org.keycloak</groupId>
-      <artifactId>keycloak-saml-servlet-filter-adapter</artifactId>
+      <artifactId>keycloak-saml-adapter-core</artifactId>
+      <version>${keycloak.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.keycloak</groupId>
+      <artifactId>keycloak-saml-adapter-api-public</artifactId>
+      <version>${keycloak.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.keycloak</groupId>
+      <artifactId>keycloak-adapter-spi</artifactId>
       <version>${keycloak.version}</version>
       <scope>provided</scope>
     </dependency>
